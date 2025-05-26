@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import type React from "react";
 
 const SSaveButton = styled.button`
   width: 20%;
@@ -11,7 +12,12 @@ const SSaveButton = styled.button`
   height: 70px;
 `;
 
-export const SaveButton = (props) => {
+type Props = {
+  children: React.ReactNode;
+  onClick: () => void;
+};
+
+export const SaveButton = (props: Props) => {
   const { children, onClick } = props;
   return <SSaveButton onClick={onClick}>{children}</SSaveButton>;
 };
