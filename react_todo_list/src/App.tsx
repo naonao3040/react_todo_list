@@ -23,19 +23,19 @@ export default function App() {
 
   // 保存ボタンの処理
   const onClickCreateTodo = () => {
-    if (inputValue.trim() === "") {
-    } else {
-      const newTodo = {
-        // 重複を避けるため、Dateで擬似的に一意のidを生成する
-        id: Date.now(),
-        text: inputValue,
-        completed: false,
-        editing: false,
-      };
+    const text = inputValue.trim();
 
-      setTodos((prevTodos) => [...prevTodos, newTodo]);
-      setInputValue("");
-    }
+    if (text === "") return;
+    const newTodo = {
+      // 重複を避けるため、Dateで擬似的に一意のidを生成する
+      id: Date.now(),
+      text: inputValue,
+      completed: false,
+      editing: false,
+    };
+
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    setInputValue("");
   };
 
   // 編集ボタンの処理
@@ -45,14 +45,6 @@ export default function App() {
         todo.id === id
           ? { ...todo, editing: true }
           : { ...todo, editing: false }
-      )
-    );
-  };
-
-  const onChangeTodo = (e: any, todo_id: number) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((t) =>
-        t.id === todo_id ? { ...t, text: e.target.value } : t
       )
     );
   };
@@ -102,7 +94,6 @@ export default function App() {
         <TodoList
           todos={todos}
           onChangeTodoCheck={onChangeTodoCheck}
-          onChangeTodo={onChangeTodo}
           onSaveEditTodo={onSaveEditTodo}
           onClickEditTodo={onClickEditTodo}
           onClickDeleteTodo={onClickDeleteTodo}
