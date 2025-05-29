@@ -18,7 +18,12 @@ export default function App() {
   const [todos, setTodos] = useState<Array<Todo>>(() => {
     // 初期化時にlocalStorageからデータを取得
     const savedTodos = localStorage.getItem("todos");
-    return savedTodos ? JSON.parse(savedTodos) : [];
+    const initialTodos = savedTodos ? JSON.parse(savedTodos) : [];
+
+    return initialTodos.map((todo: Todo) => ({
+      ...todo,
+      editing: false,
+    }));
   });
 
   // 保存ボタンの処理
@@ -75,13 +80,6 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
-
-  // リロード時
-  useEffect(() => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) => ({ ...todo, editing: false }))
-    );
-  }, []);
 
   return (
     <>
